@@ -3,6 +3,7 @@ import sympy as sp
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+import os
 
 
 # блок функций
@@ -148,6 +149,15 @@ analytical_result = calculate_function(sp.integrate(function, x), right_border) 
 newton_result = NewtonCotes(function, left_border, right_border, 2000, 2)
 
 gauss_result = Gauss(function, left_border, right_border, 1000, 4)
+
+with open(os.path.join(os.getcwd(), 'psf_c40_03.txt'), 'r') as file:
+    lines = []
+    for line in file:
+        values = [value.strip() for value in  line.split()]
+        lines.append(values)
+    array = np.array(lines, dtype='float64')
+    
+
 
 print("Analytical result: ", analytical_result)
 print("Newton-Cotes result: ", newton_result)
