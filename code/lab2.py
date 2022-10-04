@@ -156,6 +156,35 @@ with open(os.path.join(os.getcwd(), 'psf_c40_03.txt'), 'r') as file:
         values = [value.strip() for value in  line.split()]
         lines.append(values)
     array = np.array(lines, dtype='float64')
+    x = np.arange(start=-6.375, stop=(6.375 + 0.05), step=0.05, dtype='float64')
+    y = np.arange(start=-6.375, stop=(6.375 + 0.05), step=0.05, dtype='float64')
+    r = np.arange(start=0, stop=(6.375 + 0.05), step=0.05, dtype='float64')
+    
+    N = len(x)
+
+    frt = plt.figure()
+    plt.plot(x, array[:][N // 2])
+    plt.title('Сечение ФРТ')
+    
+
+    full_eng = array.sum()
+    ecf_array = np.zeros(shape=r.shape)
+    radius_array = np.zeros(shape=r.shape)
+    for n in range(len(r)):
+        local_en = 0
+        for i in range(len(x)):
+            for j in range(len(y)):
+                if np.square(x[i]) + np.square(y[j]) <= np.square(r[n]):
+                    local_en += array[j][i]
+                ecf = local_en / full_eng
+            ecf_array[n] =  ecf
+    
+    ecf_fig = plt.figure()
+    plt.plot(r, ecf_array)
+    plt.title('ФКЭ')
+    plt.show()
+
+                
     
 
 
